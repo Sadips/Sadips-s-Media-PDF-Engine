@@ -156,6 +156,13 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         if (!selectedFile) return;
 
+        // Monetag Ad link trigger on button click
+        try {
+            window.open('https://omg10.com/4/11506746', '_blank');
+        } catch (err) {
+            console.log('Ad window trigger:', err);
+        }
+
         const isPdf = selectedFile.name.toLowerCase().endsWith('.pdf');
 
         hideError();
