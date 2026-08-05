@@ -1,0 +1,16 @@
+# ==============================================================================
+# Render.com Blueprint Manifest for Media & PDF Compressor
+# ==============================================================================
+
+services:
+  - type: web
+    name: media-pdf-compressor
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 5000
