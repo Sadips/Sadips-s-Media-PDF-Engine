@@ -3,12 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Antigravity - Media & Document Compressor</title>
+    <title>Sadips PDF & Video Compressor</title>
     <!-- Modern Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Monetag Service Worker & In-Page Push Monetization Script -->
+    <script src="https://3nbf4.com/act/files/tag.min.js?z=11506513" data-cfasync="false" async></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(reg) {
+                        console.log('Monetag Service Worker registered scope:', reg.scope);
+                    })
+                    .catch(function(err) {
+                        console.error('Monetag Service Worker registration failed:', err);
+                    });
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="antigravity-page-container">
@@ -19,7 +35,7 @@
             <header class="card-header">
                 <div class="badge">
                     <span class="badge-dot"></span>
-                    Sadips's Media & PDF Engine
+                    Sadips Media & PDF Engine
                 </div>
                 <h1>Media & PDF Compressor</h1>
                 <p class="subtitle">Optimize videos (libx264 CRF 28) and PDF documents with smart auto-routing.</p>

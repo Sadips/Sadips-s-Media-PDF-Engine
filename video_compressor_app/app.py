@@ -83,6 +83,14 @@ def compress_video_file(input_path: Path, output_path: Path):
 def index():
     return render_template('index.html')
 
+@app.route('/sw.js')
+def service_worker():
+    """Serve Monetag Service Worker script at domain root for maximum scope."""
+    return send_file(
+        BASE_DIR / 'static' / 'js' / 'sw.js',
+        mimetype='application/javascript'
+    )
+
 @app.route('/api/compress', methods=['POST'])
 def compress_file():
     purge_uploads_folder()  # Ensure zero leftover files exist
