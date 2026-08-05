@@ -1,5 +1,5 @@
 /**
- * Google Antigravity - Modular Media & PDF Compressor Frontend Controller
+ * Google Antigravity - Modular Media, PDF & Image Compressor Frontend Controller
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <polyline points="10 9 9 9 8 9"></polyline>
     </svg>`;
 
+    const imageSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <polyline points="21 15 16 10 5 21"></polyline>
+    </svg>`;
+
     // Helper: Format bytes into readable string
     function formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
@@ -63,10 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const nameLower = file.name.toLowerCase();
         const isPdf = nameLower.endsWith('.pdf');
+        const isImage = file.type.startsWith('image/') || nameLower.match(/\.(jpg|jpeg|png|webp|bmp|tiff)$/i);
         const isVideo = file.type.startsWith('video/') || nameLower.match(/\.(mp4|mov|avi|mkv|webm|flv|wmv|m4v)$/i);
 
-        if (!isPdf && !isVideo) {
-            showError('Please select a supported Video file or PDF document.');
+        if (!isPdf && !isImage && !isVideo) {
+            showError('Please select a supported Video file, PDF document, or Image.');
             return;
         }
 
@@ -74,7 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fileName.textContent = file.name;
         fileSize.textContent = formatBytes(file.size);
 
-        if (isPdf) {
+        if (isImage) {
+            fileIcon.innerHTML = imageSvg;
+            typeBadge.textContent = 'Image File';
+            typeBadge.className = 'type-badge image';
+        } else if (isPdf) {
             fileIcon.innerHTML = pdfSvg;
             typeBadge.textContent = 'PDF Document';
             typeBadge.className = 'type-badge pdf';
@@ -163,13 +174,18 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Ad window trigger:', err);
         }
 
-        const isPdf = selectedFile.name.toLowerCase().endsWith('.pdf');
+        const nameLower = selectedFile.name.toLowerCase();
+        const isPdf = nameLower.endsWith('.pdf');
+        const isImage = selectedFile.type.startsWith('image/') || nameLower.match(/\.(jpg|jpeg|png|webp|bmp|tiff)$/i);
 
         hideError();
         uploadForm.classList.add('hidden');
         progressState.classList.remove('hidden');
 
-        if (isPdf) {
+        if (isImage) {
+            statusTitle.textContent = 'Compressing Image File...';
+            statusSub.textContent = 'Executing Pillow stream optimizer. Download will start automatically.';
+        } else if (isPdf) {
             statusTitle.textContent = 'Compressing PDF Document...';
             statusSub.textContent = 'Executing PyMuPDF stream optimizer. Download will start automatically.';
         } else {
@@ -187,8 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
         xhr.onload = function () {
             if (xhr.status === 200) {
                 const disposition = xhr.getResponseHeader('Content-Disposition');
-                let ext = isPdf ? '_compressed.pdf' : '_compressed.mp4';
-                let downloadName = selectedFile.name.replace(/\.[^/.]+$/, "") + ext;
+                let extMatch = selectedFile.name.match(/\.([^/.]+)$/);
+                let ext = extMatch ? extMatch[0] : '';
+                let downloadName = selectedFile.name.replace(/\.[^/.]+$/, "") + "_compressed" + ext;
 
                 if (disposition && disposition.indexOf('filename=') !== -1) {
                     const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Google Antigravity - Modular Media & PDF Compressor Stylesheet
+   Google Antigravity - Modular Video, PDF & Image Compressor Stylesheet
    ========================================================================== */
 
 :root {
@@ -23,6 +23,7 @@
     
     --pdf-red: #FF4B4B;
     --video-blue: #3B82F6;
+    --image-green: #10B981;
     --success-color: #10B981;
     --error-color: #EF4444;
     
@@ -245,7 +246,7 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Dynamic File Type Badge */
+/* Dynamic File Type Badges */
 .type-badge {
     font-size: 0.68rem;
     font-weight: 700;
@@ -266,6 +267,12 @@ body {
     background: rgba(59, 130, 246, 0.18);
     color: #60A5FA;
     border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.type-badge.image {
+    background: rgba(16, 185, 129, 0.18);
+    color: #34D399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .file-size {

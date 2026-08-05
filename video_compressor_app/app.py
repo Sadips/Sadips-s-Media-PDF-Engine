@@ -5,6 +5,7 @@ import subprocess
 import uuid
 from pathlib import Path
 import fitz  # PyMuPDF
+from PIL import Image
 from flask import Flask, render_template, request, send_file, jsonify
 from werkzeug.utils import secure_filename
 
@@ -17,7 +18,18 @@ UPLOAD_FOLDER.mkdir(exist_ok=True)
 
 VIDEO_EXTENSIONS = {'mp4', 'mov', 'avi', 'mkv', 'webm', 'flv', 'wmv', 'm4v'}
 PDF_EXTENSIONS = {'pdf'}
-ALLOWED_EXTENSIONS = VIDEO_EXTENSIONS | PDF_EXTENSIONS
+IMAGE_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp', 'bmp', 'tiff'}
+ALLOWED_EXTENSIONS = VIDEO_EXTENSIONS | PDF_EXTENSIONS | IMAGE_EXTENSIONS
+
+MIME_TYPES = {
+    'pdf': 'application/pdf',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'png': 'image/png',
+    'webp': 'image/webp',
+    'bmp': 'image/bmp',
+    'tiff': 'image/tiff'
+}
 
 def get_ffmpeg_path():
     """Dynamically locate the FFmpeg executable."""
@@ -46,8 +58,25 @@ def purge_uploads_folder():
             except Exception:
                 pass
 
+def compress_image_file(input_path: Path, output_path: Path):
+    """Compress image using Pillow with stream optimization and RGBA preservation."""
+    with Image.open(input_path) as img:
+        ext = output_path.suffix.lower().lstrip('.')
+        
+        # Convert RGBA/P to RGB for JPEG
+        if ext in ('jpg', 'jpeg') and img.mode in ('RGBA', 'P', 'LA'):
+            img = img.convert('RGB')
+
+        save_kwargs = {'optimize': True}
+        if ext in ('jpg', 'jpeg', 'webp'):
+            save_kwargs['quality'] = 75
+        elif ext == 'png':
+            save_kwargs['compress_level'] = 6
+
+        img.save(str(output_path), **save_kwargs)
+
 def compress_pdf_file(input_path: Path, output_path: Path):
-    """Compress PDF document using PyMuPDF stream optimization and garbage collection without file locks."""
+    """Compress PDF document using PyMuPDF stream optimization without file locks."""
     pdf_bytes = input_path.read_bytes()
     doc = fitz.open(stream=pdf_bytes, filetype="pdf")
     doc.save(
@@ -116,8 +145,14 @@ def compress_file():
         # 1. Save uploaded file to server temp folder
         file.save(str(input_path))
 
-        # 2. Smart Routing based on file extension
-        if ext in PDF_EXTENSIONS:
+        # 2. Tri-Engine Smart Routing based on file extension
+        if ext in IMAGE_EXTENSIONS:
+            compressed_name = f"{filename_stem}_compressed.{ext}"
+            mimetype = MIME_TYPES.get(ext, 'image/jpeg')
+            output_path = UPLOAD_FOLDER / f"{file_id}_{compressed_name}"
+            compress_image_file(input_path, output_path)
+
+        elif ext in PDF_EXTENSIONS:
             compressed_name = f"{filename_stem}_compressed.pdf"
             mimetype = 'application/pdf'
             output_path = UPLOAD_FOLDER / f"{file_id}_{compressed_name}"

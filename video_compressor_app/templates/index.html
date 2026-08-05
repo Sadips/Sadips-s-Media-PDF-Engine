@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sadips PDF & Video Compressor</title>
+    <title>Sadips Media, PDF & Image Compressor</title>
     <!-- Modern Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,17 +35,17 @@
             <header class="card-header">
                 <div class="badge">
                     <span class="badge-dot"></span>
-                    Sadips Media & PDF Engine
+                    Sadips Universal Media Engine
                 </div>
-                <h1>Media & PDF Compressor</h1>
-                <p class="subtitle">Optimize videos (libx264 CRF 28) and PDF documents with smart auto-routing.</p>
+                <h1>Video, PDF & Image Compressor</h1>
+                <p class="subtitle">Compress Videos (x264), PDFs (PyMuPDF), and Images (Pillow) with smart auto-routing.</p>
             </header>
 
             <!-- Upload Dropzone Form -->
             <form id="uploadForm" class="upload-form" action="/api/compress" method="POST" enctype="multipart/form-data">
                 
                 <div class="dropzone" id="dropzone">
-                    <input type="file" id="fileInput" name="file" accept="video/*,.pdf" required class="file-input">
+                    <input type="file" id="fileInput" name="file" accept="video/*,.pdf,image/*" required class="file-input">
                     
                     <div class="dropzone-content" id="dropzoneContent">
                         <div class="upload-icon">
@@ -55,9 +55,9 @@
                                 <line x1="12" y1="3" x2="12" y2="15"></line>
                             </svg>
                         </div>
-                        <p class="primary-text">Drag & drop your Video or PDF file here</p>
+                        <p class="primary-text">Drag & drop your Video, PDF, or Image here</p>
                         <p class="secondary-text">or <span class="browse-link">browse from device</span></p>
-                        <p class="format-hint">Supports MP4, MOV, AVI, MKV, WEBM & PDF (Up to 500MB)</p>
+                        <p class="format-hint">Supports MP4, MOV, PDF, JPG, PNG, WEBP (Up to 500MB)</p>
                     </div>
 
                     <!-- Selected File Info State -->
@@ -68,7 +68,7 @@
                         <div class="file-details">
                             <div class="file-title-row">
                                 <span class="file-name" id="fileName">file.ext</span>
-                                <span class="type-badge" id="typeBadge">PDF</span>
+                                <span class="type-badge" id="typeBadge">IMAGE</span>
                             </div>
                             <span class="file-size" id="fileSize">0 MB</span>
                         </div>
