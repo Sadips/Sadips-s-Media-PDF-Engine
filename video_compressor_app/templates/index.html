@@ -29,7 +29,7 @@
 <body>
     <div class="antigravity-page-container">
         
-        <!-- Modular Component Block -->
+        <!-- Modular Fully Responsive Compressor Card -->
         <main class="antigravity-compressor-card" id="antigravityCompressorCard">
             
             <header class="card-header">
@@ -44,19 +44,19 @@
             <!-- Upload Dropzone Form -->
             <form id="uploadForm" class="upload-form" action="/api/compress" method="POST" enctype="multipart/form-data">
                 
-                <!-- File Dropzone -->
+                <!-- Fluid Drag & Drop Upload Zone -->
                 <div class="dropzone" id="dropzone">
                     <input type="file" id="fileInput" name="file" accept="video/*,.pdf,image/*" required class="file-input">
                     
                     <div class="dropzone-content" id="dropzoneContent">
                         <div class="upload-icon">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                 <polyline points="17 8 12 3 7 8"></polyline>
                                 <line x1="12" y1="3" x2="12" y2="15"></line>
                             </svg>
                         </div>
-                        <p class="primary-text">Drag & drop your Video, PDF, or Image here</p>
+                        <p class="primary-text">Drag & drop your file here</p>
                         <p class="secondary-text">or <span class="browse-link">browse from device</span></p>
                         <p class="format-hint">Supports MP4, MOV, PDF, JPG, PNG, WEBP (Up to 500MB)</p>
                     </div>
@@ -80,11 +80,12 @@
                 <!-- Target File Size Selection Section -->
                 <div class="target-size-section">
                     <label class="target-section-title">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 2v20M2 12h20M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"></path>
                         </svg>
                         Target File Size (Optional)
                     </label>
+                    
                     <div class="size-options-grid">
                         <label class="size-pill active">
                             <input type="radio" name="targetSize" value="auto" checked class="size-radio">
@@ -115,7 +116,7 @@
                     <!-- Custom Size Number Input Container -->
                     <div class="custom-size-container hidden" id="customSizeContainer">
                         <div class="custom-input-wrapper">
-                            <input type="number" id="customKbInput" name="custom_kb" min="10" max="500000" placeholder="Enter target size" class="custom-kb-input">
+                            <input type="number" id="customKbInput" name="custom_kb" min="10" max="500000" placeholder="Enter target size in KB" class="custom-kb-input">
                             <span class="input-unit">KB</span>
                         </div>
                         <span class="custom-hint">Enter your desired maximum file size in Kilobytes (KB).</span>
@@ -125,7 +126,7 @@
                 <!-- Submit Action Button -->
                 <button type="submit" class="btn-compress" id="btnCompress" disabled>
                     <span>Compress & Download</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
@@ -150,7 +151,7 @@
             <!-- Success Notification State -->
             <div class="success-state hidden" id="successState">
                 <div class="success-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                 </div>

@@ -1,10 +1,10 @@
 /* ==========================================================================
-   Google Antigravity - Modular Video, PDF & Image Compressor Stylesheet
+   Google Antigravity - Fully Responsive Media, PDF & Image Compressor
    ========================================================================== */
 
 :root {
     --bg-dark: #07090E;
-    --card-bg: rgba(18, 24, 38, 0.7);
+    --card-bg: rgba(18, 24, 38, 0.75);
     --card-border: rgba(255, 255, 255, 0.08);
     --card-glow: rgba(0, 242, 254, 0.12);
     
@@ -34,38 +34,48 @@
     --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* {
+/* Base Reset & Box Sizing */
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-dark);
-    background-image: 
-        radial-gradient(circle at 15% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 85% 80%, rgba(79, 172, 254, 0.08) 0%, transparent 40%);
-    color: var(--text-main);
+html, body {
+    width: 100%;
     min-height: 100vh;
+    background-color: var(--bg-dark);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-image: 
+        radial-gradient(circle at 15% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(79, 172, 254, 0.08) 0%, transparent 45%);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1.5rem 1rem;
 }
 
+/* Fluid Responsive Page Container */
 .antigravity-page-container {
     width: 100%;
-    max-width: 580px;
+    max-width: 640px;
+    margin: 0 auto;
 }
 
 /* --------------------------------------------------------------------------
-   Modular Card Component
+   Modular Card Component (Fluid Width)
    -------------------------------------------------------------------------- */
 .antigravity-compressor-card {
+    width: 100%;
     background: var(--card-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
     padding: 2.25rem;
@@ -122,6 +132,7 @@ body {
     letter-spacing: -0.02em;
     color: var(--text-main);
     margin-bottom: 0.4rem;
+    line-height: 1.25;
 }
 
 .card-header .subtitle {
@@ -131,18 +142,23 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Dropzone
+   Flexbox Drag & Drop Upload Zone
    -------------------------------------------------------------------------- */
 .dropzone {
     position: relative;
+    width: 100%;
     border: 2px dashed var(--dropzone-border);
     border-radius: var(--radius-md);
     background: var(--dropzone-bg);
-    padding: 2rem 1.5rem;
+    padding: 2.25rem 1.25rem;
     text-align: center;
     cursor: pointer;
     transition: var(--transition);
     margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .dropzone:hover, .dropzone.drag-over {
@@ -159,12 +175,13 @@ body {
     height: 100%;
     opacity: 0;
     cursor: pointer;
+    z-index: 5;
 }
 
 .upload-icon {
     width: 52px;
     height: 52px;
-    margin: 0 auto 0.75rem;
+    margin-bottom: 0.75rem;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 50%;
     display: flex;
@@ -199,12 +216,14 @@ body {
 }
 
 .format-hint {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: var(--text-dim);
+    line-height: 1.4;
 }
 
-/* File Selected Details */
+/* File Selected Info View */
 .file-info {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -220,6 +239,7 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--primary-cyan);
+    flex-shrink: 0;
 }
 
 .file-details {
@@ -287,9 +307,10 @@ body {
     font-size: 1.4rem;
     cursor: pointer;
     line-height: 1;
-    padding: 4px;
+    padding: 6px;
     border-radius: 4px;
     transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .btn-remove:hover {
@@ -298,34 +319,37 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Target File Size Controls
+   Target File Size Controls (Grid + Flexbox)
    -------------------------------------------------------------------------- */
 .target-size-section {
-    background: rgba(10, 14, 23, 0.4);
+    width: 100%;
+    background: rgba(10, 14, 23, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-md);
-    padding: 1.15rem;
+    padding: 1.25rem;
     margin-bottom: 1.5rem;
 }
 
 .target-section-title {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.85rem;
+    gap: 8px;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-main);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
 }
 
 .target-section-title svg {
     color: var(--primary-cyan);
 }
 
+/* PC / Desktop Grid Layout (3 Columns) */
 .size-options-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    gap: 10px;
+    width: 100%;
 }
 
 .size-pill {
@@ -333,16 +357,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 10px;
+    min-height: 44px;
+    padding: 8px 12px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-sm);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: var(--text-muted);
     cursor: pointer;
     transition: var(--transition);
     user-select: none;
+    text-align: center;
 }
 
 .size-radio {
@@ -365,8 +391,9 @@ body {
     box-shadow: 0 0 12px rgba(0, 242, 254, 0.15);
 }
 
-/* Custom KB Input Container */
+/* Custom Size Input */
 .custom-size-container {
+    width: 100%;
     margin-top: 0.85rem;
     animation: fadeIn 0.25s ease-out;
 }
@@ -380,16 +407,18 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .custom-kb-input {
     width: 100%;
-    padding: 10px 42px 10px 14px;
-    background: rgba(7, 9, 14, 0.8);
+    min-height: 44px;
+    padding: 10px 45px 10px 14px;
+    background: rgba(7, 9, 14, 0.85);
     border: 1px solid var(--primary-cyan);
     border-radius: var(--radius-sm);
     color: var(--text-main);
-    font-size: 0.9rem;
+    font-size: 16px; /* 16px prevents iOS browser auto-zoom on input focus */
     font-family: inherit;
     outline: none;
     box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
@@ -403,7 +432,7 @@ body {
 .input-unit {
     position: absolute;
     right: 14px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--primary-cyan);
     pointer-events: none;
@@ -411,9 +440,9 @@ body {
 
 .custom-hint {
     display: block;
-    font-size: 0.73rem;
+    font-size: 0.75rem;
     color: var(--text-dim);
-    margin-top: 5px;
+    margin-top: 6px;
 }
 
 /* --------------------------------------------------------------------------
@@ -421,12 +450,13 @@ body {
    -------------------------------------------------------------------------- */
 .btn-compress {
     width: 100%;
+    min-height: 48px;
     padding: 0.9rem 1.5rem;
     background: var(--gradient-primary);
     border: none;
     border-radius: var(--radius-md);
     color: #07090E;
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     font-weight: 700;
     cursor: pointer;
     display: flex;
@@ -449,16 +479,17 @@ body {
 }
 
 .btn-secondary {
-    padding: 0.75rem 1.25rem;
+    min-height: 44px;
+    padding: 0.75rem 1.5rem;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: var(--radius-md);
     color: var(--text-main);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
-    margin-top: 1rem;
+    margin-top: 1.25rem;
 }
 
 .btn-secondary:hover {
@@ -581,7 +612,7 @@ body {
     background: rgba(239, 68, 68, 0.12);
     border: 1px solid rgba(239, 68, 68, 0.3);
     color: #FCA5A5;
-    padding: 10px 14px;
+    padding: 12px 14px;
     border-radius: var(--radius-sm);
     font-size: 0.85rem;
     margin-top: 1rem;
@@ -598,4 +629,87 @@ body {
 /* Utilities */
 .hidden {
     display: none !important;
+}
+
+/* ==========================================================================
+   STRICT MOBILE RESPONSIVE MEDIA QUERY (@media max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    body {
+        padding: 0.75rem 0.5rem;
+        align-items: flex-start;
+    }
+
+    .antigravity-page-container {
+        padding: 0;
+    }
+
+    .antigravity-compressor-card {
+        padding: 1.35rem 1rem;
+        border-radius: 16px;
+    }
+
+    .card-header {
+        margin-bottom: 1.25rem;
+    }
+
+    .card-header h1 {
+        font-size: 1.35rem;
+    }
+
+    .card-header .subtitle {
+        font-size: 0.85rem;
+    }
+
+    .dropzone {
+        padding: 1.75rem 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .upload-icon {
+        width: 44px;
+        height: 44px;
+        margin-bottom: 0.5rem;
+    }
+
+    .primary-text {
+        font-size: 0.9rem;
+    }
+
+    .secondary-text {
+        font-size: 0.8rem;
+    }
+
+    .format-hint {
+        font-size: 0.73rem;
+    }
+
+    .target-size-section {
+        padding: 1rem 0.85rem;
+        margin-bottom: 1.25rem;
+    }
+
+    /* Mobile KB Radio Buttons: 2-Column Touch Grid with 46px min-height */
+    .size-options-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .size-pill {
+        min-height: 46px;
+        font-size: 0.88rem;
+        padding: 10px 8px;
+    }
+
+    .btn-compress {
+        min-height: 50px;
+        font-size: 1rem;
+    }
+}
+
+/* Extra Small Screens (max-width: 400px) */
+@media (max-width: 400px) {
+    .size-options-grid {
+        grid-template-columns: 1fr;
+    }
 }
