@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sadips Media, PDF & Image Compressor</title>
+    <title>Sadips Universal Media, PDF & Image Compressor</title>
     <!-- Modern Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,12 +38,13 @@
                     Sadips Universal Media Engine
                 </div>
                 <h1>Video, PDF & Image Compressor</h1>
-                <p class="subtitle">Compress Videos (x264), PDFs (PyMuPDF), and Images (Pillow) with smart auto-routing.</p>
+                <p class="subtitle">Compress Videos, PDFs, and Images to a specific target file size or standard presets.</p>
             </header>
 
             <!-- Upload Dropzone Form -->
             <form id="uploadForm" class="upload-form" action="/api/compress" method="POST" enctype="multipart/form-data">
                 
+                <!-- File Dropzone -->
                 <div class="dropzone" id="dropzone">
                     <input type="file" id="fileInput" name="file" accept="video/*,.pdf,image/*" required class="file-input">
                     
@@ -73,6 +74,51 @@
                             <span class="file-size" id="fileSize">0 MB</span>
                         </div>
                         <button type="button" class="btn-remove" id="btnRemove" title="Change file">&times;</button>
+                    </div>
+                </div>
+
+                <!-- Target File Size Selection Section -->
+                <div class="target-size-section">
+                    <label class="target-section-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M2 12h20M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"></path>
+                        </svg>
+                        Target File Size (Optional)
+                    </label>
+                    <div class="size-options-grid">
+                        <label class="size-pill active">
+                            <input type="radio" name="targetSize" value="auto" checked class="size-radio">
+                            <span>Auto (Best)</span>
+                        </label>
+                        <label class="size-pill">
+                            <input type="radio" name="targetSize" value="50" class="size-radio">
+                            <span>50 KB</span>
+                        </label>
+                        <label class="size-pill">
+                            <input type="radio" name="targetSize" value="100" class="size-radio">
+                            <span>100 KB</span>
+                        </label>
+                        <label class="size-pill">
+                            <input type="radio" name="targetSize" value="200" class="size-radio">
+                            <span>200 KB</span>
+                        </label>
+                        <label class="size-pill">
+                            <input type="radio" name="targetSize" value="500" class="size-radio">
+                            <span>500 KB</span>
+                        </label>
+                        <label class="size-pill" id="customSizePill">
+                            <input type="radio" name="targetSize" value="custom" class="size-radio">
+                            <span>Custom</span>
+                        </label>
+                    </div>
+
+                    <!-- Custom Size Number Input Container -->
+                    <div class="custom-size-container hidden" id="customSizeContainer">
+                        <div class="custom-input-wrapper">
+                            <input type="number" id="customKbInput" name="custom_kb" min="10" max="500000" placeholder="Enter target size" class="custom-kb-input">
+                            <span class="input-unit">KB</span>
+                        </div>
+                        <span class="custom-hint">Enter your desired maximum file size in Kilobytes (KB).</span>
                     </div>
                 </div>
 
@@ -109,7 +155,7 @@
                     </svg>
                 </div>
                 <h3>Compression Complete!</h3>
-                <p>Your file was compressed and downloaded. Temporary server files have been cleaned up.</p>
+                <p>Your file was compressed to your target size and downloaded. Temporary server files have been cleaned up.</p>
                 <button type="button" class="btn-secondary" id="btnReset">Compress Another File</button>
             </div>
 

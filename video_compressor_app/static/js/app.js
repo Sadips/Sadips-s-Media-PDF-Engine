@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const typeBadge = document.getElementById('typeBadge');
     const btnRemove = document.getElementById('btnRemove');
     const btnCompress = document.getElementById('btnCompress');
+
+    const sizePills = document.querySelectorAll('.size-pill');
+    const sizeRadios = document.querySelectorAll('.size-radio');
+    const customSizeContainer = document.getElementById('customSizeContainer');
+    const customKbInput = document.getElementById('customKbInput');
     
     const uploadForm = document.getElementById('uploadForm');
     const progressState = document.getElementById('progressState');
@@ -61,6 +66,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const sizes = ['Bytes', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    // Target Size Radio Pill Selection Controller
+    sizeRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            sizePills.forEach(pill => pill.classList.remove('active'));
+            const parentPill = radio.closest('.size-pill');
+            if (parentPill) parentPill.classList.add('active');
+
+            if (radio.value === 'custom') {
+                customSizeContainer.classList.remove('hidden');
+                customKbInput.focus();
+            } else {
+                customSizeContainer.classList.add('hidden');
+            }
+        });
+    });
+
+    // Helper: Get selected target KB value
+    function getSelectedTargetKb() {
+        const checkedRadio = document.querySelector('input[name="targetSize"]:checked');
+        if (!checkedRadio) return 'auto';
+        
+        const val = checkedRadio.value;
+        if (val === 'custom') {
+            const customVal = parseInt(customKbInput.value, 10);
+            return (customVal && customVal > 0) ? customVal : 'auto';
+        }
+        return val;
     }
 
     // Update UI when file is selected
@@ -177,24 +211,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameLower = selectedFile.name.toLowerCase();
         const isPdf = nameLower.endsWith('.pdf');
         const isImage = selectedFile.type.startsWith('image/') || nameLower.match(/\.(jpg|jpeg|png|webp|bmp|tiff)$/i);
+        const targetKb = getSelectedTargetKb();
 
         hideError();
         uploadForm.classList.add('hidden');
         progressState.classList.remove('hidden');
 
+        const targetText = targetKb !== 'auto' ? ` (Target: ${targetKb} KB)` : '';
+
         if (isImage) {
-            statusTitle.textContent = 'Compressing Image File...';
+            statusTitle.textContent = `Compressing Image File${targetText}...`;
             statusSub.textContent = 'Executing Pillow stream optimizer. Download will start automatically.';
         } else if (isPdf) {
-            statusTitle.textContent = 'Compressing PDF Document...';
+            statusTitle.textContent = `Compressing PDF Document${targetText}...`;
             statusSub.textContent = 'Executing PyMuPDF stream optimizer. Download will start automatically.';
         } else {
-            statusTitle.textContent = 'Compressing Video File...';
+            statusTitle.textContent = `Compressing Video File${targetText}...`;
             statusSub.textContent = 'Executing FFmpeg libx264 engine. Download will start automatically.';
         }
 
         const formData = new FormData();
         formData.append('file', selectedFile);
+        formData.append('target_kb', targetKb);
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/compress', true);
