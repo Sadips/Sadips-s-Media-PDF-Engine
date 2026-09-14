@@ -10,21 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     
-    <!-- Monetag Service Worker & In-Page Push Monetization Script -->
-    <script src="https://3nbf4.com/act/files/tag.min.js?z=11506513" data-cfasync="false" async></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(function(reg) {
-                        console.log('Monetag Service Worker registered scope:', reg.scope);
-                    })
-                    .catch(function(err) {
-                        console.error('Monetag Service Worker registration failed:', err);
-                    });
-            });
-        }
-    </script>
 </head>
 <body>
     <div class="antigravity-page-container">
