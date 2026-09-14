@@ -100,6 +100,7 @@ body {
 /* Card Header */
 .card-header {
     margin-bottom: 1.75rem;
+    text-align: center;
 }
 
 .badge {
@@ -142,7 +143,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Flexbox Drag & Drop Upload Zone
+   1. Centered Drag & Drop Upload Zone
    -------------------------------------------------------------------------- */
 .dropzone {
     position: relative;
@@ -151,20 +152,30 @@ body {
     border-radius: var(--radius-md);
     background: var(--dropzone-bg);
     padding: 2.25rem 1.25rem;
-    text-align: center;
     cursor: pointer;
     transition: var(--transition);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 .dropzone:hover, .dropzone.drag-over {
     border-color: var(--primary-cyan);
     background: var(--dropzone-hover);
     box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+}
+
+.dropzone-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
 }
 
 .file-input {
@@ -179,9 +190,9 @@ body {
 }
 
 .upload-icon {
-    width: 52px;
-    height: 52px;
-    margin-bottom: 0.75rem;
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 0.75rem auto;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 50%;
     display: flex;
@@ -201,12 +212,14 @@ body {
     font-weight: 600;
     color: var(--text-main);
     margin-bottom: 0.25rem;
+    text-align: center;
 }
 
 .secondary-text {
     font-size: 0.85rem;
     color: var(--text-muted);
     margin-bottom: 0.75rem;
+    text-align: center;
 }
 
 .browse-link {
@@ -219,6 +232,7 @@ body {
     font-size: 0.78rem;
     color: var(--text-dim);
     line-height: 1.4;
+    text-align: center;
 }
 
 /* File Selected Info View */
@@ -319,15 +333,17 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Target File Size Controls (Grid + Flexbox)
+   2. Constrained Target File Size Container (With Clean Edges)
    -------------------------------------------------------------------------- */
 .target-size-section {
     width: 100%;
+    max-width: 500px;
+    margin: 0 auto 1.5rem auto;
+    padding: 1.25rem 20px;
+    box-sizing: border-box;
     background: rgba(10, 14, 23, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-md);
-    padding: 1.25rem;
-    margin-bottom: 1.5rem;
 }
 
 .target-section-title {
@@ -450,6 +466,8 @@ body {
    -------------------------------------------------------------------------- */
 .btn-compress {
     width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
     min-height: 48px;
     padding: 0.9rem 1.5rem;
     background: var(--gradient-primary);
@@ -664,12 +682,26 @@ body {
     .dropzone {
         padding: 1.75rem 1rem;
         margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .dropzone-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
     .upload-icon {
-        width: 44px;
-        height: 44px;
-        margin-bottom: 0.5rem;
+        width: 46px;
+        height: 46px;
+        margin: 0 auto 0.5rem auto;
     }
 
     .primary-text {
@@ -685,8 +717,11 @@ body {
     }
 
     .target-size-section {
-        padding: 1rem 0.85rem;
-        margin-bottom: 1.25rem;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto 1.25rem auto;
+        padding: 1rem 15px;
+        box-sizing: border-box;
     }
 
     /* Mobile KB Radio Buttons: 2-Column Touch Grid with 46px min-height */
